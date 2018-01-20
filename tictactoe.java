@@ -5,9 +5,6 @@ public class tictactoemod
         new tictactoemod ();
     }
 
-
-    /* Again, your job is to complete the code in the methods as specified */
-
     char a = ' ';
     char b = ' ';
     char c = ' ';
@@ -20,26 +17,34 @@ public class tictactoemod
     char z = 'b';
 
     char turn = 'x';
-
+    
+    
     public tictactoemod ()
     {
+        // while there isn't a winner, print the board and allow turns
         while (!winner ())
         {
             printboard ();
 
             System.out.println ("It is " + turn + "'s turn.");
+            
+            // run makemove method to allow the correct player to take a turn
             makemove (turn);
+            
+            // change player turns
             if (turn == 'x')
                 turn = 'o';
             else
                 turn = 'x';
         }
+        // re-print the board after winning condition has been met
         printboard ();
+        // declare winner
         System.out.println ("The winner is " + printWinner ());
     }
 
 
-
+    // prints the 3x3 board
     public void printboard ()
     {
         /* Print out the board like this:
@@ -59,11 +64,13 @@ public class tictactoemod
         System.out.println ("           3  " + g + " | " + h + " | " + i + "");
     }
 
-
+    // makemove allows the correct player to input the x and y coordinate they would like to mark
     public void makemove (char piece)
     {
         int x = IBIO.inputInt ("\nEnter the x-coordinate: ");
         int y = IBIO.inputInt ("Enter the y-coordinate: ");
+        
+        // if invalid inputs, ask the player to enter coordinates again
         while (!isValid (x, y))
         {
             System.out.println ("Error - invalid coordinate. Try again.");
@@ -71,7 +78,7 @@ public class tictactoemod
             y = IBIO.inputInt ("Enter the y-coordinate: ");
         }
 
-
+        // mark the spot marked by the player based on input
         if (x == 1 && y == 1)
             a = piece;
         else if (x == 2 && y == 1)
@@ -93,7 +100,9 @@ public class tictactoemod
             i = piece;
     }
 
-
+    // if the numbers entered are invalid, return false
+    // eg, x and y must be between 1 and 3
+    // also the position can not be full (eg. if x==1 && y==1 && a!=' ') - then they picked postion a AND it is full
     public boolean isValid (int x, int y)
     {
 
@@ -121,12 +130,9 @@ public class tictactoemod
             return false;
         else
             return true;
-        //make it return false if invalid
-        // eg, x and y must be between 1 and 3
-        // also the position can not be full (eg. if x==1 && y==1 && a!=' ') - then they picked postion a AND it is full
     }
 
-
+    // returns true if there is a winner based on marked spots
     public boolean winner ()
     { //the first line a-b-c is a match
         if (a == b && a == c && a != ' ')
@@ -145,16 +151,15 @@ public class tictactoemod
             return true;
         else if (c == e && c == g && c != ' ')
             return true;
-        //complete the other 7 winning conditions
         else if (a != ' ' && b != ' ' && c != ' ' && d != ' ' && e != ' ' && f != ' ' && g != ' ' && h != ' ' && i != ' ')
             return true;
         else
             return false;
     }
 
-
+    //returns who is in the winning condition
     public char printWinner ()
-    { //returns who is in the winning condition
+    { 
         if (a == b && a == c && a != ' ') //top horizontal
             return a;
         else if (d == e && d == f && d != ' ')
@@ -171,7 +176,6 @@ public class tictactoemod
             return a;
         else if (a != ' ' && b != ' ' && c != ' ' && d != ' ' && e != ' ' && f != ' ' && g != ' ' && h != ' ' && i != ' ')
             return z;
-        //complete the other six positions
         else //if (c == e && c == g && c != ' ') - diagonal backwards
             return c;
 
